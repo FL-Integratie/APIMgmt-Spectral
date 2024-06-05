@@ -7,7 +7,7 @@ rules:
   tag-description: off
   oas3-parameter-description: off
 
-  fluvius-rule-important-info-fields:
+  fl-rule-important-info-fields:
     description: Absolutely must have the info information
     message: "Missing the {{property}}"
     given: "$.info"
@@ -20,7 +20,7 @@ rules:
      - field: "version"
        function: truthy
  
-  fluvius-rule-path-description:
+  fl-rule-path-description:
     description: Each operation must have a description which cannot be empty.
     given: $.paths.[*][get,post,put,delete,options]
     severity: error
@@ -28,7 +28,7 @@ rules:
       field: description
       function: truthy
  
-  fluvius-rule-pascal-case-operation-id:
+  fl-rule-pascal-case-operation-id:
     description: OperationId should be pascalCased.
     type: style
     given: $.paths.[*][get,post,put,delete,options]
@@ -39,7 +39,7 @@ rules:
       functionOptions:
         type: pascal
   
-  fluvius-rule-camel-case-parameter-name:
+  fl-rule-camel-case-parameter-name:
     description: Parameter name should be camelCased.
     message: "The value '{{value}}' should be camel cased."
     type: style
@@ -52,7 +52,7 @@ rules:
       functionOptions:
         type: camel
  
-  fluvius-rule-operation-singular-tag:
+  fl-rule-operation-singular-tag:
     description: Operations must have at least one tag value.
     type: style
     given: $.paths.[*][get,post,put,delete,options]
@@ -63,7 +63,7 @@ rules:
       functionOptions:
         min: 1
  
-  fluvius-rule-path-no-trailing-slash:
+  fl-rule-path-no-trailing-slash:
     description: Paths should not end with `#/`.
     type: style
     given: "$.paths[*]~"
@@ -73,7 +73,7 @@ rules:
       functionOptions:
         notMatch: ".+\/$"
  
-  fluvius-rule-path-lower-case-id:
+  fl-rule-path-lower-case-id:
     description: Resource identifier in path should be represented as 'xxxId', eg CustomerId.
     type: style
     given: "$.paths[*]~"
@@ -83,7 +83,7 @@ rules:
       functionOptions:
         notMatch: "{\\w*id}"
   
-  fluvius-rule-oas3-request-support-json:
+  fl-rule-oas3-request-support-json:
     description: Every request MUST support `application/json` media type
     formats:
       - oas3
@@ -94,7 +94,7 @@ rules:
     then:
       function: falsy
 
-  fluvius-rule-paths-kebab-case:
+  fl-rule-paths-kebab-case:
     description: All YAML/JSON paths MUST follow kebab-case
     severity: warn
     recommended: true
@@ -105,7 +105,7 @@ rules:
       functionOptions:
         match: "^\/([a-z0-9]+(-[a-z0-9]+)*)?(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$" # doesn't allow /asasd{asdas}sadas pattern or not closed braces
 
-  fluvius-rule-path-parameters-camelCase-alphanumeric:
+  fl-rule-path-parameters-camelCase-alphanumeric:
     description: Path parameters MUST follow camelCase
     severity: warn
     recommended: true
@@ -116,7 +116,7 @@ rules:
       functionOptions:
         match: "^[a-z][a-zA-Z0-9]+$"
 
-  fluvius-rule-definitions-camelCase-alphanumeric:
+  fl-rule-definitions-camelCase-alphanumeric:
     description: All YAML/JSON definitions MUST follow fields-camelCase and be ASCII alphanumeric characters or `_` or `$`.
     severity: error
     recommended: true
@@ -127,7 +127,7 @@ rules:
       functionOptions:
         match: "/^[a-z$_]{1}[A-Z09$_]*/"
 
-  fluvius-rule-properties-camelCase-alphanumeric:
+  fl-rule-properties-camelCase-alphanumeric:
     description: All JSON Schema properties MUST follow fields-camelCase and be ASCII alphanumeric characters or `_` or `$`.
     severity: error
     recommended: true
@@ -138,7 +138,7 @@ rules:
       functionOptions:
         match: "/^[a-z$_]{1}[A-Z09$_]*/"
 
-  fluvius-rule-request-GET-no-body:
+  fl-rule-request-GET-no-body:
     description: "A 'GET' request MUST NOT accept a 'body' parameter"
     severity: error
     given: $.paths..get.parameters..in
@@ -147,7 +147,7 @@ rules:
       functionOptions:
         notMatch: "/^body$/"
 
-  fluvius-rule-headers-no-x-headers:
+  fl-rule-headers-no-x-headers:
     description: "All 'HTTP' headers SHOULD NOT include 'X-' headers (https://tools.ietf.org/html/rfc6648)."
     severity: warn
     given: "$..parameters[?(@.in == 'header')].name"
@@ -159,7 +159,7 @@ rules:
       functionOptions:
         notMatch: "/^(x|X)-/"
 
-  fluvius-rule-headers-hyphenated-pascal-case:
+  fl-rule-headers-hyphenated-pascal-case:
     description: All `HTTP` headers MUST use `Hyphenated-Pascal-Case` notation
     severity: error
     given: "$..parameters[?(@.in == 'header')].name"
@@ -171,7 +171,7 @@ rules:
       functionOptions:
         match: "/^([A-Z][a-z0-9]-)*([A-Z][a-z0-9])+/"
   
-  fluvius-rule-common-responses-ok:
+  fl-rule-common-responses-ok:
     description: Responses should contain common response - 200 (ok)
     message: '{{description}}. Missing {{property}}'
     severity: error
@@ -180,7 +180,7 @@ rules:
       field: '200'
       function: truthy
 
-  fluvius-rule-common-responses-bad-request:
+  fl-rule-common-responses-bad-request:
     description: Responses should contain common response - 400 (bad request)
     message: '{{description}}. Missing {{property}}'
     severity: error
@@ -189,7 +189,7 @@ rules:
       field: '404'
       function: truthy
 
-  fluvius-rule-common-responses-not-found:
+  fl-rule-common-responses-not-found:
     description: Responses should contain common response - 404 (not found)
     message: '{{description}}. Missing {{property}}'
     severity: error
@@ -198,7 +198,7 @@ rules:
       field: '404'
       function: truthy
 
-  fluvius-rule-common-responses-too-many-requests:
+  fl-rule-common-responses-too-many-requests:
     description: Responses should contain common response - 429 (too many requests)
     message: '{{description}}. Missing {{property}}'
     severity: info
@@ -207,7 +207,7 @@ rules:
       field: '429'
       function: truthy
 
-  fluvius-rule-common-responses-server-error:
+  fl-rule-common-responses-server-error:
     description: Responses should contain common response - 500 (server error)
     message: '{{description}}. Missing {{property}}'
     severity: error
@@ -216,7 +216,7 @@ rules:
       field: '500'
       function: truthy
 
-  #fluvius-rule-property-description:
+  #fl-rule-property-description:
    # description: All schema properties should have a description.
    # message: Property should have a description.
    # severity: info
@@ -226,7 +226,7 @@ rules:
    #   field: description
    #   function: defined
 
-  fluvius-rule-property-type:
+  fl-rule-property-type:
     description: All schema properties should have a defined type.
     message: Property should have a defined type.
     severity: warn
@@ -237,7 +237,7 @@ rules:
       field: type
       function: truthy
 
-  fluvius-rule-property-example:
+  fl-rule-property-example:
     description: All schema properties should have an example.
     message: Property should have an example.
     severity: warn
