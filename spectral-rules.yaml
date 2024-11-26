@@ -28,8 +28,8 @@ rules:
       field: description
       function: truthy
  
-  fl-rule-pascal-case-operation-id:
-    description: OperationId should be pascalCased.
+  fl-rule-camel-case-operation-id:
+    description: OperationId should be camelCased.
     type: style
     given: $.paths.[*][get,post,put,delete,options]
     severity: info
@@ -37,7 +37,7 @@ rules:
       field: operationId
       function: casing
       functionOptions:
-        type: pascal
+        type: camel
   
   fl-rule-camel-case-parameter-name:
     description: Parameter name should be camelCased.
