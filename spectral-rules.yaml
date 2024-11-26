@@ -172,13 +172,29 @@ rules:
         match: "/^([A-Z][a-z0-9]-)*([A-Z][a-z0-9])+/"
   
   fl-rule-common-responses-ok:
-    description: Responses should contain common response - 200 (ok)
+    description: Responses should contain common responses - 200 (ok), 201 (created), 202 (accepted), or 204 (no content)
     message: '{{description}}. Missing {{property}}'
     severity: error
     given: $.paths..responses
     then:
-      field: '200'
-      function: truthy
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:     
+            '200':
+              type: object       
+            '201':
+              type: object
+            '202':
+              type: object
+            '204':
+              type: object
+          anyOf:            
+            - required: ['200']
+            - required: ['201']
+            - required: ['202']
+            - required: ['204']
 
   fl-rule-common-responses-bad-request:
     description: Responses should contain common response - 400 (bad request)
